@@ -13,9 +13,53 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function transform(arr) {
+  if (Array.isArray(arr) === true){
+    var arrayClone = arr.slice();
+    for (var i=0; i<arrayClone.length; i++){
+      if (arrayClone[i] === '--discard-next'){
+      		var a = arrayClone.indexOf('--discard-next');
+          arrayClone.splice(a, 2);
+          if (arrayClone[i] === '--double-prev'){
+          	var a = arrayClone.indexOf('--double-prev');
+          	arrayClone.splice(a,1)
+          }
+          if(arrayClone[i] === '--discard-prev'){
+          	var a = arrayClone.indexOf('--discard-prev');
+          	arrayClone.splice(a,1)
+          }
+      }
+     	if (arrayClone[i] === '--discard-prev'){
+      		var a = arrayClone.indexOf('--discard-prev');
+          if( a === 0 ){
+          	arrayClone.splice(0, 1)
+          } else {
+          	arrayClone.splice(a-1, 2);
+          }
+      }
+      if (arrayClone[i] === '--double-next'){
+      		var a = arrayClone.indexOf('--double-next');
+          console.log(a)
+          if (a === arrayClone.length - 1){
+          	arrayClone.splice(arrayClone.length - 1, 1)
+          } else {
+            arrayClone[a] = arrayClone[a+1];
+          }
+      }
+      if (arrayClone[i] === '--double-prev'){
+      		var a = arrayClone.indexOf('--double-prev');
+          if( a === 0 ){
+          	arrayClone.splice(0, 1)
+          } else {
+          arrayClone[a] = arrayClone[a-1];
+          }
+      }
+
+    }
+    return arrayClone;
+   } else {
+    throw new Error("'arr' parameter must be an instance of the Array!");
+   }
 }
 
 module.exports = {
